@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
 
 export default function App() {
 
@@ -11,7 +11,7 @@ const textHandler = (enteredGoal) => {
 }
 
 const pressHandler = () => {
-  setListGoals(currentGoal => [...listGoals, goal])
+  setListGoals(currentGoal => [...listGoals, { id: Math.random().toString(), value: goal}])
 }
 
   return (
@@ -25,18 +25,14 @@ const pressHandler = () => {
           />
           <Button title="Add" onPress={pressHandler}/>
       </View>
-      <ScrollView>
-        {listGoals.map((goal, index) => {
-
-          return(
-            <View key={index} style={styles.listStyle}>
-              <Text>
-                {goal}
-              </Text>
-            </View>
-          )
-        })}
-      </ScrollView>
+      <FlatList data={listGoals} renderItem={itemData => (
+        <View style={styles.listStyle}>
+        <Text>
+          {itemData.item.value}
+        </Text>
+      </View>
+      )}/>
+      
     </View>
   );
 }
