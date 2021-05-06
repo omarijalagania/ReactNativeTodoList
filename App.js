@@ -16,6 +16,12 @@ const pressHandler = () => {
   setListGoals(currentGoal => [...listGoals, { id: Math.random().toString(), value: goal}])
 }
 
+const onDelete = (id) => {
+  setListGoals(currentGoal => {
+    return listGoals.filter((goal) => goal.id !== id )
+  });
+}
+
   return (
     <View style={styles.screen}>
       <View style={styles.inputContainer}>
@@ -23,7 +29,7 @@ const pressHandler = () => {
           <Button title="Add" onPress={pressHandler}/>
       </View>
       <FlatList data={listGoals} renderItem={itemData => (
-        <GoalsItem itemData={itemData}/>
+        <GoalsItem itemData={itemData} onDelete={onDelete}/>
       )}/>
       
     </View>
